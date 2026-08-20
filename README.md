@@ -18,9 +18,18 @@ proyecto de Supabase (Project Settings → API):
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-clave-anon-o-publishable
+
+# Solo para /moderacion — nunca se exponen al navegador
+SUPABASE_SERVICE_ROLE_KEY=tu-clave-service-role-secreta
+ADMIN_PASSWORD=elige-una-contraseña
+ADMIN_SESSION_SECRET=una-cadena-larga-y-aleatoria
 ```
 
-Estas mismas dos variables se configuran en Vercel (Project Settings →
+`SUPABASE_SERVICE_ROLE_KEY` está en el dashboard de Supabase: **Project
+Settings → API → Project API keys → service_role (secret)**. Nunca la subas
+al repo ni la pongas en una variable `NEXT_PUBLIC_*`.
+
+Estas mismas variables se configuran en Vercel (Project Settings →
 Environment Variables) para producción, preview y development.
 
 ## Desarrollo local
@@ -55,10 +64,28 @@ región `us-east-2`) con:
 
 ### Moderar propuestas
 
-No hay panel de moderación: se revisa y aprueba directamente desde el
-**Table Editor** de Supabase, cambiando `estado_moderacion` de `pendiente` a
-`aprobada` (o `rechazada`). Solo las propuestas `aprobada` aparecen en
-`/propuestas/[categoria]/ver`.
+`/moderacion` es una vista mínima, protegida por contraseña, con la cola de
+propuestas `pendiente` (todas las categorías, la más antigua primero) y un
+botón **Aprobar** / **Rechazar** por fila. Solo las propuestas `aprobada`
+aparecen en `/propuestas/[categoria]/ver`.
+
+- **Acceso**: entra a `/moderacion`, te redirige a `/moderacion/login`. La
+  contraseña es el valor de `ADMIN_PASSWORD`. Al iniciar sesión se guarda una
+  cookie `httpOnly` válida 8 horas; "Cerrar sesión" la borra.
+- **No es una cuenta de usuario de Supabase Auth**: es una sola contraseña
+  compartida por el equipo, suficiente para "vista mínima protegida". Si más
+  adelante se necesita saber *quién* aprobó cada propuesta o dar acceso
+  diferenciado a varias personas, migrar a Supabase Auth (con una tabla de
+  moderadores) es el siguiente paso natural.
+- **Revocar acceso a todos de golpe**: cambia `ADMIN_SESSION_SECRET` (en
+  Vercel o `.env.local`) — invalida cualquier cookie de sesión existente sin
+  tocar la contraseña.
+- Las escrituras de moderación usan la `service_role key` de Supabase
+  (bypassa RLS) desde un Server Action que primero revalida la cookie de
+  sesión — nunca se expone al cliente.
+
+Alternativamente, siempre puedes moderar directamente desde el **Table
+Editor** de Supabase, cambiando `estado_moderacion` a mano.
 
 Para replicar el esquema en otro proyecto de Supabase, corre las migraciones
 en `supabase/migrations/` (en orden) desde el SQL Editor, o con la CLI de
@@ -69,8 +96,8 @@ Supabase.
 1. Sube este repositorio a GitHub.
 2. En Vercel: **Add New → Project**, importa el repositorio.
 3. Framework Preset: **Next.js** (detectado automáticamente).
-4. Agrega las variables de entorno `NEXT_PUBLIC_SUPABASE_URL` y
-   `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+4. Agrega las variables de entorno de la sección anterior (las dos
+   `NEXT_PUBLIC_*` y las tres de `/moderacion`).
 5. Deploy. Cada push a `main` vuelve a desplegar automáticamente.
 
 ## Estructura
@@ -82,11 +109,17 @@ src/
     propuestas/[slug]/page.tsx     Formulario de propuesta por categoría
     propuestas/[slug]/gracias/     Confirmación con folio
     propuestas/[slug]/ver/         Propuestas aprobadas de la categoría
+    moderacion/page.tsx            Cola de moderación (protegida)
+    moderacion/login/page.tsx      Login por contraseña
   components/                      Header, Footer, formulario, etc.
   lib/
     categorias.ts                  Contenido de las 8 categorías + municipios
     actions.ts                     Server Action: valida y envía a Supabase
     supabase.ts                    Cliente de Supabase (anon key)
+    supabase-admin.ts              Cliente con service role (solo /moderacion)
+    adminAuth.ts                   Verificación de la cookie de sesión
+    adminActions.ts                Server Actions: login, logout, aprobar/rechazar
     database.types.ts              Tipos de la tabla propuestas
+  proxy.ts                         Protege /moderacion (redirige a /login)
 supabase/migrations/                Historial de migraciones SQL aplicadas
 ```
