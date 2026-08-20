@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getCategoria } from "@/lib/categorias";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseClient } from "@/lib/supabase";
 import type { PropuestaRow } from "@/lib/database.types";
 
 export const dynamic = "force-dynamic";
@@ -36,7 +36,7 @@ export default async function VerPropuestasPage({
   const categoria = getCategoria(slug);
   if (!categoria) notFound();
 
-  const { data, error } = await supabase
+  const { data, error } = await getSupabaseClient()
     .from("propuestas")
     .select("*")
     .eq("categoria_slug", categoria.slug)

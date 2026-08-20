@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { supabase } from "./supabase";
+import { getSupabaseClient } from "./supabase";
 import { getCategoria } from "./categorias";
 
 export interface EnviarPropuestaState {
@@ -53,7 +53,7 @@ export async function enviarPropuesta(
     return { error: "Falta tu propuesta: al menos 20 caracteres.", values };
   }
 
-  const { data, error } = await supabase.rpc("crear_propuesta", {
+  const { data, error } = await getSupabaseClient().rpc("crear_propuesta", {
     p_categoria_slug: categoria.slug,
     p_categoria_nombre: categoria.nombre,
     p_situacion: situacion,
