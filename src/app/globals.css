@@ -1,26 +1,64 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-cream: oklch(0.965 0.012 85);
+  --color-cream-soft: oklch(0.99 0.004 85);
+  --color-marino: oklch(0.3 0.07 262);
+  --color-marino-dark: oklch(0.24 0.07 262);
+  --color-rojo: oklch(0.52 0.19 27);
+  --color-rojo-soft: oklch(0.96 0.03 27);
+  --color-rojo-text: oklch(0.44 0.16 27);
+  --color-ink: oklch(0.24 0.02 262);
+  --color-ink-soft: oklch(0.43 0.02 262);
+  --color-ink-softer: oklch(0.48 0.02 262);
+  --color-ink-mute: oklch(0.55 0.02 262);
+  --color-ink-faint: oklch(0.45 0.02 262);
+  --color-line: oklch(0.91 0.012 85);
+  --color-line-soft: oklch(0.94 0.008 85);
+  --color-line-strong: oklch(0.88 0.01 262);
+  --color-line-card: oklch(0.9 0.012 85);
+  --font-sans: var(--font-archivo);
+  --font-mono: var(--font-plex-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes subeFade {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes creceLinea {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes latido {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.75; }
+}
+@keyframes revelaLinea {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
+}
+@keyframes giroLento {
+  from { transform: rotate(-45deg); }
+  to { transform: rotate(315deg); }
+}
+@keyframes flota {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(26px); }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: var(--color-ink);
+}
+
+a {
+  color: var(--color-marino);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--color-rojo);
+}
+
+::placeholder {
+  color: oklch(0.68 0.01 262);
 }
