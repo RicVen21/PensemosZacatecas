@@ -10,10 +10,13 @@ export function Footer() {
         </span>
       </div>
       <div className="flex gap-6 text-[13px]">
-        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://www.facebook.com/PensemosZacatecas/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Facebook
         </a>
-        <a href="mailto:hola@pensemoszacatecas.mx">hola@pensemoszacatecas.mx</a>
       </div>
     </footer>
   );
