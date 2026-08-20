@@ -13,7 +13,8 @@ const initialState: EnviarPropuestaState = {
     propuesta: "",
     nombre: "",
     municipio: "",
-    contacto: "",
+    correo: "",
+    telefono: "",
   },
 };
 
@@ -84,16 +85,31 @@ export function PropuestaForm({ categoria }: { categoria: Categoria }) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label className="font-mono text-[11px] tracking-[0.13em] uppercase text-ink-faint">
-          Correo o teléfono de contacto
-        </label>
-        <input
-          name="contacto"
-          defaultValue={state.values.contacto}
-          placeholder="Opcional — sólo para dar seguimiento"
-          className={campoClase}
-        />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="flex flex-col gap-2">
+          <label className="font-mono text-[11px] tracking-[0.13em] uppercase text-ink-faint">
+            Correo electrónico
+          </label>
+          <input
+            type="email"
+            name="correo"
+            defaultValue={state.values.correo}
+            placeholder="Opcional — sólo para dar seguimiento"
+            className={campoClase}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="font-mono text-[11px] tracking-[0.13em] uppercase text-ink-faint">
+            Teléfono
+          </label>
+          <input
+            type="tel"
+            name="telefono"
+            defaultValue={state.values.telefono}
+            placeholder="Opcional — sólo para dar seguimiento"
+            className={campoClase}
+          />
+        </div>
       </div>
 
       {state.error && (

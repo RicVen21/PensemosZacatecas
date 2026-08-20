@@ -12,7 +12,8 @@ export interface EnviarPropuestaState {
     propuesta: string;
     nombre: string;
     municipio: string;
-    contacto: string;
+    correo: string;
+    telefono: string;
   };
 }
 
@@ -28,9 +29,13 @@ export async function enviarPropuesta(
   const propuesta = String(formData.get("propuesta") ?? "").trim();
   const nombre = String(formData.get("nombre") ?? "").trim();
   const municipio = String(formData.get("municipio") ?? "").trim();
-  const contacto = String(formData.get("contacto") ?? "").trim();
+  const correo = String(formData.get("correo") ?? "").trim();
+  const telefono = String(formData.get("telefono") ?? "").trim();
 
-  const values = { situacion, causa, propuesta, nombre, municipio, contacto };
+  const values = { situacion, causa, propuesta, nombre, municipio, correo, telefono };
+  // La tabla guarda un solo campo "contacto"; el formulario lo separa
+  // visualmente en correo y teléfono y se combinan aquí antes de guardar.
+  const contacto = [correo, telefono].filter(Boolean).join(" · ") || null;
 
   const categoria = getCategoria(slug);
   if (!categoria) {
@@ -61,7 +66,7 @@ export async function enviarPropuesta(
     p_propuesta: propuesta,
     p_nombre: nombre || null,
     p_municipio: municipio || null,
-    p_contacto: contacto || null,
+    p_contacto: contacto,
   });
   const folio = data as string | null;
 
