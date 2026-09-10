@@ -23,7 +23,7 @@ export function PropuestaForm({ categoria }: { categoria: Categoria }) {
   const [state, formAction, pending] = useActionState(action, initialState);
 
   return (
-    <form action={formAction} className="flex flex-col gap-7 border border-line-card bg-white p-6 sm:p-9 lg:p-11">
+    <form action={formAction} className="flex flex-col gap-7 rounded-sm border border-line-card bg-white p-6 sm:p-9 lg:p-11">
       <Campo label="¿Qué observas o vives tú en este tema?" required>
         <textarea
           name="situacion"
@@ -113,7 +113,7 @@ export function PropuestaForm({ categoria }: { categoria: Categoria }) {
       </div>
 
       {state.error && (
-        <div className="border-l-[3px] border-rojo bg-rojo-soft px-3.5 py-3 text-sm text-rojo-text">
+        <div className="rounded-sm border-l-[3px] border-rojo bg-rojo-soft px-3.5 py-3 text-sm text-rojo-text">
           {state.error}
         </div>
       )}
@@ -125,7 +125,7 @@ export function PropuestaForm({ categoria }: { categoria: Categoria }) {
         <button
           type="submit"
           disabled={pending}
-          className="bg-marino px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-marino-dark disabled:opacity-60"
+          className="rounded-sm bg-marino px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-marino-dark disabled:opacity-60"
         >
           {pending ? "Enviando…" : "Enviar mi propuesta"}
         </button>

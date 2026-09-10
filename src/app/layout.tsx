@@ -17,9 +17,8 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pensemos Zacatecas",
-  description:
-    "Agrupación ciudadana rumbo a 2027. Piensa, debate y comparte tu propuesta para Zacatecas en ocho temas abiertos.",
+  title: "Zacatecas Piensa",
+  description: "Propuestas para el Zacatecas que queremos.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

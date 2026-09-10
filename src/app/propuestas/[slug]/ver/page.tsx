@@ -15,7 +15,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const categoria = getCategoria(slug);
   return {
-    title: categoria ? `Propuestas · ${categoria.nombre} · Pensemos Zacatecas` : "Pensemos Zacatecas",
+    title: categoria ? `Propuestas · ${categoria.nombre} · Zacatecas Piensa` : "Zacatecas Piensa",
   };
 }
 
@@ -63,14 +63,14 @@ export default async function VerPropuestasPage({
         </div>
         <Link
           href={`/propuestas/${categoria.slug}`}
-          className="border border-line-strong px-4 py-2.5 text-sm font-semibold text-marino hover:border-marino"
+          className="rounded-sm border border-line-strong px-4 py-2.5 text-sm font-semibold text-marino hover:border-marino"
         >
           Enviar la mía
         </Link>
       </div>
 
       {error && (
-        <div className="border-l-[3px] border-rojo bg-rojo-soft px-3.5 py-3 text-sm text-rojo-text">
+        <div className="rounded-sm border-l-[3px] border-rojo bg-rojo-soft px-3.5 py-3 text-sm text-rojo-text">
           No pudimos cargar las propuestas en este momento. Intenta de nuevo más tarde.
         </div>
       )}
@@ -88,7 +88,7 @@ export default async function VerPropuestasPage({
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {propuestas?.map((p) => (
-          <article key={p.id} className="flex flex-col gap-4 border border-line-card bg-white p-6">
+          <article key={p.id} className="flex flex-col gap-4 rounded-sm border border-line-card bg-white p-6">
             <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] tracking-[0.08em] uppercase text-ink-mute">
               <span>{p.id}</span>
               <span>{formatearFecha(p.fecha_envio)}</span>

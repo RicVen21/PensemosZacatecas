@@ -17,6 +17,9 @@
   --color-line-soft: oklch(0.94 0.008 85);
   --color-line-strong: oklch(0.88 0.01 262);
   --color-line-card: oklch(0.9 0.012 85);
+  --color-navy-2: oklch(0.44 0.06 262);
+  --color-dot-1: oklch(0.78 0.005 250);
+  --color-dot-2: oklch(0.58 0.005 250);
   --font-sans: var(--font-archivo);
   --font-mono: var(--font-plex-mono);
 }
@@ -37,13 +40,18 @@
   from { transform: translateY(105%); }
   to { transform: translateY(0); }
 }
-@keyframes giroLento {
-  from { transform: rotate(-45deg); }
-  to { transform: rotate(315deg); }
-}
 @keyframes flota {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(26px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 body {

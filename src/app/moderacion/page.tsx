@@ -3,7 +3,7 @@ import { cerrarSesion, moderarPropuesta } from "@/lib/adminActions";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import type { PropuestaRow } from "@/lib/database.types";
 
-export const metadata: Metadata = { title: "Moderación · Pensemos Zacatecas" };
+export const metadata: Metadata = { title: "Moderación · Zacatecas Piensa" };
 export const dynamic = "force-dynamic";
 
 function formatearFecha(iso: string) {

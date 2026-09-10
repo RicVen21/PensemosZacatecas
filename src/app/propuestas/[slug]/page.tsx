@@ -15,7 +15,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const categoria = getCategoria(slug);
-  return { title: categoria ? `${categoria.nombre} · Pensemos Zacatecas` : "Pensemos Zacatecas" };
+  return { title: categoria ? `${categoria.nombre} · Zacatecas Piensa` : "Zacatecas Piensa" };
 }
 
 export default async function CategoriaPage({
@@ -62,7 +62,7 @@ export default async function CategoriaPage({
           </div>
           <Link
             href={`/propuestas/${categoria.slug}/ver`}
-            className="mt-2 inline-flex w-fit items-center gap-2 border border-line-strong px-4 py-2.5 text-sm font-semibold text-marino hover:border-marino"
+            className="mt-2 inline-flex w-fit items-center gap-2 rounded-sm border border-line-strong px-4 py-2.5 text-sm font-semibold text-marino hover:border-marino"
           >
             Ver propuestas publicadas
           </Link>
